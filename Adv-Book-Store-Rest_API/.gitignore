@@ -1,0 +1,75 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by testing tools
+coverage/
+
+# Build output
+build/
+dist/
+out/
+
+# Dependency directories
+jspm_packages/
+bower_components/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.swp
+*.bak
+*.tmp
+
+# Test coverage
+.nyc_output/
+
+# Optional npm cache directory
+.npm
+
+# Lint cache
+.eslintcache
+
+# Parcel-bundler cache
+.cache/
+
+# Next.js build output
+.next/
+
+# Nuxt.js build output
+.nuxt/
+
+# Sapper build output
+__sapper__/
+
+# FuseBox cache
+.fusebox/
+
+# Gatsby

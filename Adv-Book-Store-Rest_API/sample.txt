@@ -1,0 +1,12 @@
+ CART
+1. owner id
+2. cart Array when log-out then update cart-value
+3. when login pass backend cart data to front-end 
+
+Buy book
+1. buyer _id
+2. owner _id
+3. payment id
+3. book/books [] -> will be available to purchase 
+
+Payment details
