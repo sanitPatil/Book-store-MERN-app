@@ -24,6 +24,6 @@ bookRouter.route('/upload-book').post(
 );
 
 bookRouter.route('/all-books').get(authenticationByToken, GetAllBooks);
-bookRouter.route('/book/:bookId').get(authenticationByToken, GetBookById);
+bookRouter.route('/get-book/:bookId').get(authenticationByToken, GetBookById);
 
 export { bookRouter };

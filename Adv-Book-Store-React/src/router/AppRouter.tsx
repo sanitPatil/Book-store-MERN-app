@@ -6,7 +6,10 @@ import { LoginForm } from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
 import WelcomeMessage from "@/components/WelcomMessage";
 import { createBrowserRouter } from "react-router-dom";
-
+import CheckoutProduct from "@/components/CheckoutProduct";
+import Success from "@/components/Success";
+import Cancel from "@/components/Cancel";
+import Purchase from "@/components/Purchase";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +39,22 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/check-out",
+        element: <CheckoutProduct />,
+      },
+      {
+        path: "/success",
+        element: <Success />,
+      },
+      {
+        path: "/cancel",
+        element: <Cancel />,
+      },
+      {
+        path: "/purchase",
+        element: <Purchase />,
       },
     ],
   },

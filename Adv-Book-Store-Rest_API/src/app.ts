@@ -32,6 +32,12 @@ app.use('/api/v1/books', bookRouter);
 import { cartRouter } from './routers/Cart.Routers';
 app.use('/api/v1/cart', cartRouter);
 
+import { payRouter } from './routers/Payment.Routers';
+app.use('/api/v1/checkout', payRouter);
+
+import { purchaseRouter } from './routers/Purchase.Routers';
+app.use('/api/v1/purchase', purchaseRouter);
+
 // global error handler
 import { APIError } from './utils/APIError.utils';
 

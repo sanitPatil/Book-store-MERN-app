@@ -1,4 +1,5 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -28,6 +29,7 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig<any>) => {
 export const getAllBooks = async () => {
   try {
     const response = await api.get("/api/v1/books/all-books");
+
     return response.data;
   } catch (err) {
     console.error("Error fetching books:", err.response?.data || err.message);
@@ -39,6 +41,16 @@ interface SingIn {
   email: string;
   password: string;
 }
+
+export const getBookById = async (id) => {
+  try {
+    const response = await api.get(`/api/v1/books/get-book/${id}`);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching book:", err.response?.data || err.message);
+    throw err;
+  }
+};
 export const signInUser = async (data: SingIn) => {
   try {
     const response = await api.post("/api/v1/users/sign-in", data);
@@ -110,12 +122,29 @@ export const getCartList = async () => {
   }
 };
 
-export const checkOutSingle = async (data) => {
+// test payment
+
+export const pymentOrder = async (data) => {
   try {
-    const response = await api.post(`/api/v1/pay-order/checkout`, data);
+    const response = await api.post(
+      "api/v1/checkout/create-order-session",
+      data
+    );
     return response.data;
   } catch (error) {
-    console.error(`failed to checkout`);
+    console.error(`payment api failed`, error);
+    throw error;
+  }
+};
+
+// purchase hisotry
+
+export const fetchPurchaseHistory = async () => {
+  try {
+    const response = await api.get("/api/v1/purchase/get-purchase-history");
+    return response.data;
+  } catch (error) {
+    console.error(`Error::failed to get purchase History`);
     throw error;
   }
 };

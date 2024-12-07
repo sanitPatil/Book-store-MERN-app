@@ -1,20 +1,18 @@
-import { checkOutSingle, getAllBooks, getCartList } from "@/api/api";
+import { getAllBooks } from "@/api/api";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { useToast } from "@/hooks/use-toast";
-import { useLocalCart, useLoginState } from "@/store/appStore";
+import { useLocalCart } from "@/store/appStore";
 import { useQuery } from "@tanstack/react-query";
 import { IndianRupee, ShoppingBagIcon, ShoppingCartIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
+import { useNavigate } from "react-router-dom";
+
+// function start
+
 export function AllBooks() {
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
 
   const { toast } = useToast();
@@ -44,6 +42,10 @@ export function AllBooks() {
     });
   };
 
+  // checkout
+  const checkoutHandler = (book) => {
+    navigate("/check-out", { state: book });
+  };
   return (
     <>
       {isPending ? (
@@ -96,7 +98,7 @@ export function AllBooks() {
                         Add To <ShoppingCartIcon />
                       </Button>
                       {book?.bookInStock > 0 ? (
-                        <Button onClick={() => checkOut(book._id)}>
+                        <Button onClick={() => checkoutHandler(book)}>
                           Buy: {`${book?.bookPrice}`} <IndianRupee />{" "}
                           <ShoppingBagIcon />
                         </Button>

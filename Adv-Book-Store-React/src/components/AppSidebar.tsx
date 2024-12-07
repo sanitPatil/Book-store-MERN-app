@@ -11,6 +11,7 @@ import {
   UserRoundPlus,
   LogOut,
   LogOutIcon,
+  ShoppingBagIcon,
 } from "lucide-react";
 
 import {
@@ -100,6 +101,12 @@ export function AppSidebar() {
       url: "/sign-up",
       icon: UserRoundPlus,
       status: !loginStatus,
+    },
+    {
+      title: "Purchase-History",
+      url: "/purchase",
+      icon: ShoppingBagIcon,
+      status: loginStatus,
     },
   ];
   return (
