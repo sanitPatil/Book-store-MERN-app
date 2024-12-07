@@ -70,6 +70,6 @@ export default function Purchase() {
     //     </TableBody>
     //   </Table>
     // </div>
-    <div>hello world</div>
+    <div>TODO: UI for purchase</div>
   );
 }
