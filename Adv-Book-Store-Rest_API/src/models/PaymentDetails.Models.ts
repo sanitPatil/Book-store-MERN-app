@@ -27,7 +27,7 @@ const PaymentSchema: Schema<Payment> = new Schema(
       required: true,
     },
     amount: {
-      type: Number, 
+      type: Number,
       required: true,
     },
     paymentMode: {

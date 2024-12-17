@@ -7,6 +7,7 @@ export interface User extends Document {
   email: string;
   avatar?: string;
   accessToken: string;
+  refreshToken: string;
 }
 
 const userSchema: Schema<User> = new Schema(
@@ -39,6 +40,9 @@ const userSchema: Schema<User> = new Schema(
       type: String,
     },
     accessToken: {
+      type: String,
+    },
+    refreshToken: {
       type: String,
     },
   },

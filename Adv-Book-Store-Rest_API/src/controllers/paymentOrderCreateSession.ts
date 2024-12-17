@@ -54,7 +54,7 @@ export async function createOrderSession(
     productFromDB.bookInStock = productFromDB.bookInStock - product.quantity;
     await productFromDB.save();
 
-    const price = productFromDB.bookPrice * parseInt(product.quantity);
+    const price = productFromDB.bookPrice;
 
     const stripe = new Stripe(`${process.env.STRIPE_P_KEY}`);
 
@@ -73,10 +73,12 @@ export async function createOrderSession(
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:5173/success',
-      cancel_url: 'http://localhost:5173/cancel',
+      success_url: `${process.env.STRIPE_SUCCESS_URI}`,
+      cancel_url: `${process.env.STRIPE_CANCEL_URI}`,
     });
     // console.log(session);
+
+    // if(session.)
 
     const sessionId = await bcryptjs.hash(session.id, 10);
 

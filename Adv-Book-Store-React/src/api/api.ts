@@ -25,6 +25,7 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig<any>) => {
     return Promise.reject(error);
   }
 });
+
 // Get all books
 export const getAllBooks = async () => {
   try {

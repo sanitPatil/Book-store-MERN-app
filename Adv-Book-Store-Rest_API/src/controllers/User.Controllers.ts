@@ -4,27 +4,41 @@ import UserModel, { User } from '../models/User.Models';
 import bcryptjs from 'bcryptjs';
 import { UploadOnCloud } from '../utils/Cloudinary.Utils';
 import { APIResponse } from '../utils/APIResponse.Utils';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { AuthRequest } from '../middlewares/Authentication.Middlewares';
 
-const generateAccessToken = async (user: User) => {
+const generateAccessTokenAndRefreshToken = async (user: User): Promise<any> => {
   try {
-    return jwt.sign(
+    const accessToken = jwt.sign(
       {
         _id: user._id,
         username: user.username,
         name: user.name,
       },
-      process.env.ACCESS_TOKEN_SECRET || 'secret',
+      process.env.ACCESS_TOKEN_SECRET as string,
       {
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '1d',
+        expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
       }
     );
+
+    const refreshToken = jwt.sign(
+      {
+        _id: user._id,
+        username: user.username,
+        name: user.name,
+      },
+      process.env.REFRESH_TOKEN_SECRET as string,
+      {
+        expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+      }
+    );
+    return { accessToken, refreshToken };
   } catch (error) {
     console.error(`failed to generate access token,${error}`);
     process.exit(1);
   }
 };
+
 export async function RegisterUser(
   req: Request,
   res: Response,
@@ -168,14 +182,22 @@ export async function LoginUser(
     }
 
     const user = await UserModel.findById(existingUserByIdentifier._id).select(
-      '-password'
+      '-password -refreshToken'
     );
-    let accessToken;
-    if (user) {
-      accessToken = await generateAccessToken(user);
-      user.accessToken = accessToken;
-      await user.save();
+
+    if (!user) {
+      return next(
+        new APIError(false, 500, 'server internal issue,failed to find user', [
+          'server internal issue,failed to get user',
+        ])
+      );
     }
+    const { accessToken, refreshToken } =
+      await generateAccessTokenAndRefreshToken(user);
+    user.accessToken = accessToken;
+    user.refreshToken = refreshToken;
+    await user?.save();
+    console.log();
 
     return res
       .status(200)
@@ -183,10 +205,15 @@ export async function LoginUser(
         httpOnly: true,
         secure: true,
       })
+      .cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: true,
+      })
       .json(
         new APIResponse(200, true, `User-Successfully-Login`, {
           user,
           AccessToken: accessToken,
+          RefreshToken: refreshToken,
         })
       );
   } catch (error) {

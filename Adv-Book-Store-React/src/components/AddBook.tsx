@@ -17,7 +17,7 @@ import { useMutation } from "@tanstack/react-query";
 import { uploadBook } from "@/api/api";
 import { useNavigate } from "react-router-dom";
 import { useLoginState } from "@/store/appStore";
-import { LoaderCircleIcon } from "lucide-react";
+import { Loader2Icon, LoaderCircleIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
@@ -91,8 +91,13 @@ function AddBook() {
           {AddBookError}
         </h1>
       )}
-      {mutation?.isPending ? (
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+      {mutation.isPending ? (
+        <div className=" p-2 text-center">
+          <Loader2Icon className="inline animate-spin w-24 h-24" />
+          <div className="font-bold italic animate-pulse font-mono ">
+            Please wait while we process your request...{" "}
+          </div>
+        </div>
       ) : (
         <form
           onSubmit={handleSubmit(addBook)}

@@ -23,6 +23,8 @@ function CheckoutProduct() {
     mutationFn: pymentOrder,
     mutationKey: ["payment-order-session"],
     onSuccess: (data) => {
+      // console.log(data);
+
       stripeCheckout(data.data.id);
     },
   });

@@ -9,7 +9,7 @@ import { createBrowserRouter } from "react-router-dom";
 import CheckoutProduct from "@/components/CheckoutProduct";
 import Success from "@/components/Success";
 import Cancel from "@/components/Cancel";
-import Purchase from "@/components/Purchase";
+import { Purchase } from "@/components/Purchase";
 const router = createBrowserRouter([
   {
     path: "/",

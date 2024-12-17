@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Success() {
   const navigate = useNavigate();
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
       <CheckCircle className="text-green-500 w-16 h-16" />
