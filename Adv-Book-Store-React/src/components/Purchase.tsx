@@ -157,7 +157,7 @@ export function Purchase() {
               <div className="w-full  font-bold m-2  text-right"></div>
             </TableBody>
           </Table>
-          <div className="absolute italic right-8 top-56 text-2xl font-bold ">
+          <div className="border text-right p-2 fixed bg-orange-500 rounded-full  italic bottom-0 m-2 right-2 text-2xl font-bold ">
             <span className="p-4">Total Purchase:</span>
             <span className=" p-2">
               <IndianRupeeIcon className="inline" />

@@ -4,7 +4,7 @@ import { AuthRequest } from '../middlewares/Authentication.Middlewares';
 import PaymentModel from '../models/PaymentDetails.Models';
 import { APIResponse } from '../utils/APIResponse.Utils';
 import mongoose from 'mongoose';
-import BookModel from '../models/Book.Models';
+// import BookModel from '../models/Book.Models';
 
 export async function getPurchaseHistory(
   req: Request,
@@ -97,7 +97,7 @@ export async function getPurchaseHistory(
       },
     ]);
 
-    console.log(purchaseData);
+    // console.log(purchaseData);
 
     if (!purchaseData)
       return next(

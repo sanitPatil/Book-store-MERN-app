@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { APIError } from '../utils/APIError.utils';
 import { APIResponse } from '../utils/APIResponse.Utils';
-import Stripe from 'stripe';
+// import Stripe from 'stripe';
 import BookModel from '../models/Book.Models';
 import PaymentModel from '../models/PaymentDetails.Models';
 import { AuthRequest } from '../middlewares/Authentication.Middlewares';
 import bcryptjs from 'bcryptjs';
+import stripe from '../utils/Stripe.Utils';
 export async function createOrderSession(
   req: Request,
   res: Response,
@@ -56,7 +57,7 @@ export async function createOrderSession(
 
     const price = productFromDB.bookPrice;
 
-    const stripe = new Stripe(`${process.env.STRIPE_P_KEY}`);
+    // const stripe = new Stripe(`${process.env.STRIPE_P_KEY}`);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -76,31 +77,28 @@ export async function createOrderSession(
       success_url: `${process.env.STRIPE_SUCCESS_URI}`,
       cancel_url: `${process.env.STRIPE_CANCEL_URI}`,
     });
-    // console.log(session);
 
-    // if(session.)
+    // const sessionId = await bcryptjs.hash(session.id, 10);
 
-    const sessionId = await bcryptjs.hash(session.id, 10);
+    // const contact = parseInt(product.contact);
 
-    const contact = parseInt(product.contact);
+    // const savePaymentData = await PaymentModel.create({
+    //   buyerId: userId,
+    //   bookId: productFromDB._id,
+    //   quantity: product.quantity,
+    //   amount: price,
+    //   status: true,
+    //   paymentId: sessionId,
+    //   paymentMode: 'online',
+    //   payerName: product.name,
+    //   payerContact: contact,
+    // });
 
-    const savePaymentData = await PaymentModel.create({
-      buyerId: userId,
-      bookId: productFromDB._id,
-      quantity: product.quantity,
-      amount: price,
-      status: true,
-      paymentId: sessionId,
-      paymentMode: 'online',
-      payerName: product.name,
-      payerContact: contact,
-    });
-
-    if (!savePaymentData) {
-      console.log(`failed to save to db`);
-    } else {
-      console.log(`saccessfully saved!`);
-    }
+    // if (!savePaymentData) {
+    //   console.log(`failed to save to db`);
+    // } else {
+    //   console.log(`saccessfully saved!`);
+    // }
 
     return res
       .status(200)
